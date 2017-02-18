@@ -1,7 +1,6 @@
 package util
 
 import (
-	"fmt"
 	"os/exec"
 	"path/filepath"
 	"runtime"
@@ -12,7 +11,6 @@ import (
 func RegExport(regKey, root string) error {
 	fileName := filepath.Join(root, filepath.Base(regKey)+".reg")
 	regKey = getRegPath(regKey)
-	fmt.Println(fileName)
 
 	cmd := exec.Command("reg", "export", regKey, fileName)
 	return cmd.Run()
