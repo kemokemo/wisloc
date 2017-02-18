@@ -28,5 +28,23 @@ func CreateUniqueDir() (string, error) {
 func CreateDstPath(rootPath, src string) (dst string) {
 	src = filepath.Clean(src)
 	dst = filepath.Join(rootPath, filepath.Base(src))
-	return dst, nil
+	return dst
+}
+
+// If the destination directory does not exist, CheckAndCreateDir creates
+// the directory.
+func CheckAndCreateDir(dst string) error {
+	dst = filepath.Clean(dst)
+	_, err := os.Stat(dst)
+	if err == nil {
+		// the destination directory already exists
+		return nil
+	}
+
+	err = os.Mkdir(dst, os.FileMode(777))
+	if err != nil {
+		return err
+	}
+
+	return nil
 }

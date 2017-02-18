@@ -23,6 +23,18 @@ func main() {
 	conf, err := config.LoadConfig(*xmlpath)
 
 	// save windows event logs
+	if conf.IsNeedWindowsEventLogs {
+		dst := util.CreateDstPath(root, `eventlogs`)
+		err = util.CheckAndCreateDir(dst)
+		if err != nil {
+			log.Fatal("Failed to create a directory.", err)
+		}
+
+		err = util.SaveEventLog(dst)
+		if err != nil {
+			log.Fatal("Failed to save the windows event logs.", err)
+		}
+	}
 
 	// save application logs
 	for _, item := range conf.LogPathInfoList {
