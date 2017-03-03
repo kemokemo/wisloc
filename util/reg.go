@@ -20,7 +20,7 @@ func RegExport(regKey, root string) error {
 func getRegPath(regKey string) string {
 	if runtime.GOARCH == "amd64" {
 		return regKey
-	} else {
-		return strings.Replace(regKey, `WOW6432Node\`, "", 0)
 	}
+
+	return strings.Replace(regKey, `WOW6432Node\`, "", 0)
 }

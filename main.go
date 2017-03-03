@@ -5,27 +5,32 @@ import (
 
 	"log"
 
-	"github.com/kemokemo/logcollector/config"
-	"github.com/kemokemo/logcollector/util"
+	"path/filepath"
+
+	"github.com/kemokemo/wisloc/config"
+	"github.com/kemokemo/wisloc/util"
 )
 
 func main() {
-	xmlpath := flag.String("xml", "info.xml", "information xml file path to collect logs")
+	infoPath := flag.String("i", "info.xml", "file path of the information xml to collect logs")
+	outPath := flag.String("o", `.\`, "root path to save logs.")
 	flag.Parse()
 
+	rootpath := filepath.Clean(*outPath)
+
 	// make directory to save files
-	root, err := util.CreateUniqueDir()
+	destPath, err := util.CreateUniqueDir(rootpath)
 	if err != nil {
 		log.Fatal("Failed to create the destination directory.", err)
 	}
 
 	// read xml file
-	conf, err := config.LoadConfig(*xmlpath)
+	conf, err := config.LoadConfig(*infoPath)
 
 	// save windows event logs
 	if conf.IsNeedWindowsEventLogs {
-		dst := util.CreateDstPath(root, `eventlogs`)
-		err = util.CheckAndCreateDir(dst)
+		dst := filepath.Join(destPath, `eventlogs`)
+		err = util.CheckAndMakeDir(dst)
 		if err != nil {
 			log.Fatal("Failed to create a directory.", err)
 		}
@@ -38,7 +43,7 @@ func main() {
 
 	// save application logs
 	for _, item := range conf.LogPathInfoList {
-		dst := util.CreateDstPath(root, item.Path)
+		dst := filepath.Join(destPath, filepath.Base(item.Path))
 		err = util.Copy(item.Path, dst)
 		if err != nil {
 			log.Fatal("Failed to copy.", err)
@@ -47,11 +52,17 @@ func main() {
 
 	// save application registry entries
 	for _, reg := range conf.RegistryInfoList {
-		err = util.RegExport(reg.Key, root)
+		err = util.RegExport(reg.Key, destPath)
 		if err != nil {
 			log.Fatal("Failed to export registry.", err)
 		}
 	}
 
-	// compress the directory
+	// archive the directory
+	archiver := util.ZIP
+	filename := archiver.DestFmt()(filepath.Base(destPath))
+	err = archiver.Archive(destPath, filepath.Join(rootpath, filename))
+	if err != nil {
+		log.Println("Failed to archive.", err)
+	}
 }
