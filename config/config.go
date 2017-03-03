@@ -7,7 +7,7 @@ import (
 	"strings"
 )
 
-// Configuration information to collect logs
+// Config is the configuration information to collect logs.
 type Config struct {
 	XMLName                xml.Name       `xml:"CollectingSettings"`
 	SoftwareName           string         `xml:"SoftwareName"`
@@ -16,17 +16,19 @@ type Config struct {
 	LogPathInfoList        []LogPathInfo  `xml:"LogPathInfoList>LogPathInfo"`
 }
 
+// RegistryInfo is the registry information to collect.
 type RegistryInfo struct {
 	XMLName xml.Name `xml:"RegistryInfo"`
 	Key     string   `xml:"Key"`
 }
 
+// LogPathInfo is the paths information to collect.
 type LogPathInfo struct {
 	XMLName xml.Name `xml:"LogPathInfo"`
 	Path    string   `xml:"Path"`
 }
 
-// Load Config struct from xml file.
+// LoadConfig loads the Config struct from xml file.
 func LoadConfig(filePath string) (Config, error) {
 	config := Config{}
 	data, err := ioutil.ReadFile(filePath)

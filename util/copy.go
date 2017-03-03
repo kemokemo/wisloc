@@ -8,6 +8,7 @@ import (
 	"path/filepath"
 )
 
+// Copy is a standard copy function for files and directories.
 func Copy(src, dst string) error {
 	src = filepath.Clean(src)
 	dst = filepath.Clean(dst)
