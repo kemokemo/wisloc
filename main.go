@@ -2,27 +2,24 @@ package main
 
 import (
 	"flag"
+	"log"
 	"os"
+	"path/filepath"
 
 	wisloc "github.com/kemokemo/wisloc/lib"
-
-	"log"
-
-	"path/filepath"
 )
 
 var (
-	in   = flag.String("i", "info.xml", "file path of the information xml to collect logs")
-	out  = flag.String("o", `.\`, "root path to save logs.")
-	dest = ""
+	in  = flag.String("i", "info.xml", "file path of the information xml to collect logs")
+	out = flag.String("o", `.\`, "root path to save logs.")
 )
 
 func main() {
+	flag.Parse()
 	os.Exit(run())
 }
 
 func run() int {
-	flag.Parse()
 	root, err := wisloc.CreatePathInfo(*out)
 	if err != nil {
 		log.Println(err)

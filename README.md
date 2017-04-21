@@ -12,7 +12,7 @@ But please be relieved. Wisloc makes that very easy.
 
 ## Author
 
-KemoKemo t2wonderland@gmail.com
+KemoKemo: t2wonderland@gmail.com
 
 ## License
 
