@@ -1,4 +1,4 @@
-package util
+package wisloc
 
 import (
 	"fmt"
@@ -55,12 +55,10 @@ func copyFile(src, dst string) (err error) {
 	if err != nil {
 		return
 	}
-
 	err = out.Sync()
 	if err != nil {
 		return
 	}
-
 	si, err := os.Stat(src)
 	if err != nil {
 		return
@@ -69,7 +67,6 @@ func copyFile(src, dst string) (err error) {
 	if err != nil {
 		return
 	}
-
 	return
 }
 
@@ -87,19 +84,17 @@ func copyDir(src, dst string) (err error) {
 		return
 	}
 	if err == nil {
-		return fmt.Errorf("destination already exists")
+		return fmt.Errorf("The destination already exists. %s", dst)
 	}
 
 	err = os.MkdirAll(dst, si.Mode())
 	if err != nil {
 		return
 	}
-
 	entries, err := ioutil.ReadDir(src)
 	if err != nil {
 		return
 	}
-
 	for _, entry := range entries {
 		srcPath := filepath.Join(src, entry.Name())
 		dstPath := filepath.Join(dst, entry.Name())
@@ -121,6 +116,5 @@ func copyDir(src, dst string) (err error) {
 			}
 		}
 	}
-
 	return
 }

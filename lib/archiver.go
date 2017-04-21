@@ -1,4 +1,4 @@
-package util
+package wisloc
 
 import (
 	"archive/zip"

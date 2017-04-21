@@ -1,4 +1,4 @@
-package util
+package wisloc
 
 import (
 	"os/exec"
@@ -8,11 +8,10 @@ import (
 )
 
 // RegExport exports the windows registry key to the {regKey}.reg file.
-func RegExport(regKey, root string) error {
-	fileName := filepath.Join(root, filepath.Base(regKey)+".reg")
-	regKey = getRegPath(regKey)
-
-	cmd := exec.Command("reg", "export", regKey, fileName)
+func RegExport(key, root string) error {
+	path := filepath.Join(root, filepath.Base(key)+".txt")
+	key = getRegPath(key)
+	cmd := exec.Command("reg", "export", key, path)
 	return cmd.Run()
 }
 
@@ -21,6 +20,5 @@ func getRegPath(regKey string) string {
 	if runtime.GOARCH == "amd64" {
 		return regKey
 	}
-
 	return strings.Replace(regKey, `WOW6432Node\`, "", 0)
 }

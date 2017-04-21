@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<CollectingSettings>
-    <SoftwareName>Git for Windows</SoftwareName>
-    <IsNeedWindowsEventLogs>true</IsNeedWindowsEventLogs>
-    <RegistryInfoList>
-        <RegistryInfo>
-            <Key>HKEY_LOCAL_MACHINE\SOFTWARE\GitForWindows</Key>
-        </RegistryInfo>
-    </RegistryInfoList>
-    <LogPathInfoList>
-        <LogPathInfo>
-            <Path>C:\ProgramData\Git</Path>
-        </LogPathInfo>
-    </LogPathInfoList>
-</CollectingSettings>
+<CollectSettings>
+    <SoftName>Git for Windows</SoftName>
+    <NeedWEL>true</NeedWEL>
+    <RegInfoList>
+        <RegInfo>
+            <Key>HKLM\SOFTWARE\GitForWindows</Key>
+        </RegInfo>
+    </RegInfoList>
+    <PathInfoList>
+        <PathInfo>
+            <Path>%ProgramData%\Git</Path>
+        </PathInfo>
+    </PathInfoList>
+</CollectSettings>

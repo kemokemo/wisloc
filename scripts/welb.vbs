@@ -1,3 +1,5 @@
+' Windows Event Log Collecting Script as Binary format
+
 ' default path is current directory.
 Dim objWshShell
 Set objWshShell = WScript.CreateObject("WScript.Shell")

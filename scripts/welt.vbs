@@ -1,3 +1,5 @@
+' Windows Event Log Collecting Script as Text format
+
 Option Explicit
 Dim bDebug : bDebug = False   'Flag to turn on/off debugging output (true turns on).
 If Not bDebug Then On Error Resume Next
